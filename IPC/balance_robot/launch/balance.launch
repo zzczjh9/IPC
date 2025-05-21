@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Load robot parameters -->
+    <rosparam>
+        # Robot physical parameters
+        mass: 0.5          # Robot mass in kg
+        length: 0.1        # COM height in meters
+        inertia: 0.001     # Moment of inertia
+        wheel_radius: 0.05 # Wheel radius in meters
+        max_tilt: 0.3      # Maximum tilt angle in radians (~17 degrees)
+
+        # LQR cost matrices weights
+        Q_angle: 1000.0    # Cost for angle error
+        Q_angular_vel: 100.0 # Cost for angular velocity
+        Q_position: 10.0   # Cost for position error
+        Q_velocity: 10.0   # Cost for linear velocity
+        R_control: 0.1     # Cost for control effort
+        
+        # Initial LQR gains (matching your PID)
+        K_angle: -25.56    # Similar to your Kp
+        K_angular_vel: -1.70 # Similar to your Kd
+        K_position: -0.1   # Position control gain
+        K_velocity: -0.5   # Velocity control gain
+    </rosparam>
+
+    <!-- Start the balance controller node -->
+    <node name="balance_controller" pkg="balance_mpc" type="balance_node" output="screen">
+        <!-- Additional node parameters if needed -->
+        <param name="control_frequency" value="100.0"/>  <!-- 100 Hz control loop -->
+    </node>
+</launch> 
