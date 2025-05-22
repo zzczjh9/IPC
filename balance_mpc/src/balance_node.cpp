@@ -5,6 +5,10 @@
 #include "balance_controller.h"
 #include "motor_driver.h"
 
+// I2C pins for MPU6050 on Orange Pi 5 Max
+#define I2C_SDA GPIO1_B7  // I2C2_SDA_M4 pin
+#define I2C_SCL GPIO1_A1  // I2C2_SCL_M4 pin
+
 class BalanceNode {
 public:
     BalanceNode(ros::NodeHandle& nh) : controller_(nh) {
@@ -42,7 +46,8 @@ private:
     const float alpha_ = 0.9;  // Filter coefficient
     
     void setupMPU() {
-        Wire.begin(20, 21);  // SDA, SCL pins
+        // Initialize I2C with correct pins
+        Wire.begin(I2C_SDA, I2C_SCL);
         if (!mpu_.begin()) {
             ROS_ERROR("Failed to find MPU6050 chip");
             ros::shutdown();
