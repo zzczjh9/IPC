@@ -46,12 +46,14 @@ include_directories(
 add_library(${PROJECT_NAME}
   src/balance_controller.cpp
   src/motor_driver.cpp
+  src/mpu6050_linux.cpp
 )
 
 # Link the library
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
   wiringPi
+  i2c
 )
 
 # Declare the executable
@@ -62,4 +64,5 @@ target_link_libraries(balance_node
   ${PROJECT_NAME}
   ${catkin_LIBRARIES}
   wiringPi
+  i2c
 ) 
